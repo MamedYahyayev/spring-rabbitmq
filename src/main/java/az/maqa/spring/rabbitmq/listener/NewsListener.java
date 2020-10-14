@@ -1,6 +1,5 @@
 package az.maqa.spring.rabbitmq.listener;
 
-import az.maqa.spring.rabbitmq.model.News;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
@@ -12,20 +11,27 @@ import java.util.Date;
 public class NewsListener {
 
     @RabbitListener(queues = "bbc-news-queue")
-    public void bbcNewsListener(News news) {
+    public void bbcNewsListener(String news) {
         Date receiveDate = new Date();
-        log.info("News Received Time: {} , News:{}", receiveDate, news);
+        log.info("BBC News Received Time: {} , News:{}", receiveDate, news);
     }
 
     @RabbitListener(queues = "abc-news-queue")
-    public void abcNewsListener(News news) {
+    public void abcNewsListener(String news) {
         Date receiveDate = new Date();
-        log.info("News Received Time: {} , News:{}", receiveDate, news);
+        log.info("ABC News Received Time: {} , News:{}", receiveDate, news);
     }
 
     @RabbitListener(queues = "cnn-news-queue")
-    public void cnnNewsListener(News news) {
+    public void cnnNewsListener(String news) {
         Date receiveDate = new Date();
-        log.info("News Received Time: {} , News:{}", receiveDate, news);
+        log.info("CNN News Received Time: {} , News:{}", receiveDate, news);
+    }
+
+
+    @RabbitListener(queues = "all-news-queue")
+    public void allNewsListener(String news) {
+        Date receiveDate = new Date();
+        log.info("ALL News Received Time: {} , News:{}", receiveDate, news);
     }
 }

@@ -23,17 +23,23 @@ public class RabbitMqNewsConfig {
     @Value("${spring.rabbitmq.news.cnn.queue}")
     private String cnnQueue;
 
+    @Value("${spring.rabbitmq.news.all.queue}")
+    private String allQueue;
+
     @Value("${spring.rabbitmq.news.exchange}")
     private String topicExchange;
 
-    @Value("${spring.rabbitmq.news.bbc.routing.key}")
-    private String bbcRoutingKey;
+    @Value("${spring.rabbitmq.news.bbc.binding.key}")
+    private String bbcBindingKey;
 
-    @Value("${spring.rabbitmq.news.abc.routing.key}")
-    private String abcRoutingKey;
+    @Value("${spring.rabbitmq.news.abc.binding.key}")
+    private String abcBindingKey;
 
-    @Value("${spring.rabbitmq.news.cnn.routing.key}")
-    private String cnnRoutingKey;
+    @Value("${spring.rabbitmq.news.cnn.binding.key}")
+    private String cnnBindingKey;
+
+    @Value("${spring.rabbitmq.news.all.binding.key}")
+    private String allBindingKey;
 
     @Bean
     public Queue bbcQueue() {
@@ -51,23 +57,33 @@ public class RabbitMqNewsConfig {
     }
 
     @Bean
+    public Queue allQueue() {
+        return new Queue(allQueue);
+    }
+
+    @Bean
     public TopicExchange topicExchange() {
         return new TopicExchange(topicExchange);
     }
 
     @Bean
     public Binding bbcBinding(@Qualifier("bbcQueue") Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(bbcRoutingKey);
+        return BindingBuilder.bind(queue).to(topicExchange).with(bbcBindingKey);
     }
 
     @Bean
     public Binding abcBinding(@Qualifier("abcQueue") Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(abcRoutingKey);
+        return BindingBuilder.bind(queue).to(topicExchange).with(abcBindingKey);
     }
 
     @Bean
     public Binding cnnBinding(@Qualifier("cnnQueue") Queue queue, TopicExchange topicExchange) {
-        return BindingBuilder.bind(queue).to(topicExchange).with(cnnRoutingKey);
+        return BindingBuilder.bind(queue).to(topicExchange).with(cnnBindingKey);
+    }
+
+    @Bean
+    public Binding allBinding(@Qualifier("allQueue") Queue queue, TopicExchange topicExchange) {
+        return BindingBuilder.bind(queue).to(topicExchange).with(allBindingKey);
     }
 
 }

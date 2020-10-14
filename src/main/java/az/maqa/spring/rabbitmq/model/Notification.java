@@ -15,4 +15,5 @@ public class Notification implements Serializable {
     private Date createdAt;
     private Boolean isSeen;
     private String message;
+    private String routingKey;
 }

@@ -31,7 +31,7 @@ public class NotificationProducer {
         notification.setCreatedAt(new Date());
         notification.setMessage("Hello World");
         notification.setIsSeen(Boolean.FALSE);
-
+        notification.setRoutingKey(routingKey);
         sendToQueue(notification);
     }
 
